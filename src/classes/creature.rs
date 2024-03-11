@@ -33,6 +33,16 @@ impl Creature {
         }
     }
 
+    /// Returns whether the creature is alive or not.
+    ///
+    /// # Returns
+    ///
+    /// A boolean indicating whether the creature is alive or not.
+    #[allow(clippy::trivially_copy_pass_by_ref)] // This is a getter, we want to pass by reference.
+    pub fn is_alive(&self) -> bool {
+        self.alive
+    }
+
     /// Sets the alive state of the creature.
     ///
     /// # Arguments
@@ -131,8 +141,17 @@ mod tests {
     }
 
     #[test]
+    fn test_check_is_alive() {
+        let matrix: Vec<Vec<Creature>> = vec![
+            vec![Creature::new(0, 0, 2), Creature::new(0, 0, 2)],
+            vec![Creature::new(0, 0, 2), Creature::new(0, 0, 1)],
+        ];
+        assert_eq!(matrix[0][0].is_alive(), true);
+    }
+
+    #[test]
     fn test_check_neighbors() {
-        let matrix = vec![
+        let matrix: Vec<Vec<Creature>> = vec![
             vec![Creature::new(0, 0, 2), Creature::new(0, 0, 2)],
             vec![Creature::new(0, 0, 2), Creature::new(0, 0, 1)],
         ];

@@ -44,6 +44,7 @@ impl Matrix {
             }
             println!();
         }
+        println!();
     }
 
     /// Updates the matrix by calling with ref_mat the check_still_alive
@@ -52,11 +53,19 @@ impl Matrix {
     /// # Arguments
     ///
     /// - `ref_mat`: The cloned matrix to reference.
-    pub fn update_matrix(&mut self, ref_mat: &Matrix) {
+    pub fn update_matrix(&mut self, ref_mat: &Matrix) -> bool {
+        let mut creature_still_alive: Vec<bool> = Vec::new();
         for row in self.grid.iter_mut() {
             for c in row.iter_mut() {
                 c.check_still_alive(ref_mat.grid.clone());
+                if c.is_alive() {
+                    creature_still_alive.push(true);
+                }
             }
+        }
+        match creature_still_alive.len() {
+            0 => false,
+            _ => true,
         }
     }
 }
@@ -76,7 +85,7 @@ mod tests {
             ],
         };
         let ref_mat: Matrix = matrix.clone();
-        matrix.update_matrix(&ref_mat);
+        assert_eq!(matrix.update_matrix(&ref_mat), true);
         assert_eq!(
             matrix.grid,
             vec![
