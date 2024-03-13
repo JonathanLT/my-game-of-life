@@ -57,7 +57,7 @@ impl Matrix {
         let mut creature_still_alive: Vec<bool> = Vec::new();
         for row in self.grid.iter_mut() {
             for c in row.iter_mut() {
-                c.check_still_alive(ref_mat.grid.clone());
+                c.check_still_alive(&ref_mat.grid);
                 if c.is_alive() {
                     creature_still_alive.push(true);
                 }

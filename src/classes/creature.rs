@@ -57,7 +57,7 @@ impl Creature {
     /// # Arguments
     ///
     /// - `matrix`: The game matrix containing all the creatures.
-    pub fn check_still_alive(&mut self, matrix: Vec<Vec<Creature>>) {
+    pub fn check_still_alive(&mut self, matrix: &Vec<Vec<Creature>>) {
         match self.check_neighbors(matrix) {
             2 => {
                 if self.alive {
@@ -83,7 +83,7 @@ impl Creature {
     ///
     /// The number of alive neighbors of the current creature, represented as a u8.
     #[must_use]
-    pub fn check_neighbors(&self, matrix: Vec<Vec<Creature>>) -> u8 {
+    pub fn check_neighbors(&self, matrix: &Vec<Vec<Creature>>) -> u8 {
         let max_i = matrix.len() - 1;
         let max_j = matrix[0].len() - 1;
 
@@ -156,7 +156,7 @@ mod tests {
             vec![Creature::new(0, 0, 2), Creature::new(0, 0, 1)],
         ];
         let c = matrix[0][0].clone();
-        assert_eq!(c.check_neighbors(matrix), 2);
+        assert_eq!(c.check_neighbors(&matrix), 2);
     }
 
     #[test]
@@ -166,7 +166,7 @@ mod tests {
             vec![Creature::new(0, 0, 2), Creature::new(0, 0, 1)],
         ];
         let mut c_0 = matrix[0][0].clone();
-        c_0.check_still_alive(matrix);
+        c_0.check_still_alive(&matrix);
         assert_eq!(c_0.alive, true);
 
         let matrix: Vec<Vec<Creature>> = vec![
@@ -174,7 +174,7 @@ mod tests {
             vec![Creature::new(0, 0, 1), Creature::new(0, 0, 1)],
         ];
         let mut c_0 = matrix[0][0].clone();
-        c_0.check_still_alive(matrix);
+        c_0.check_still_alive(&matrix);
         assert_eq!(c_0.alive, false);
     }
 }
